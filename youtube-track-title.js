@@ -1,18 +1,20 @@
 var desc          = document.getElementById('eow-description');
 var videoTitle    = document.getElementById('eow-title');
 var player        = document.getElementById('movie_player').wrappedJSObject;
-var currentTime;
+var currentTime   = 0;
 var originalTitle = videoTitle.innerHTML;
 var timeCodesText = desc.getElementsByTagName('a');
 var timeCodesSeconds = [];
+var timeCodeToSongTitle = [];
 
 for (var i = 0; i < timeCodesText.length; i++) {
   var t = textToSeconds(timeCodesText[i].innerHTML);
 
-  if(!isNaN(t))
+  if (!isNaN(t)) {
     timeCodesSeconds.push(t);
+    timeCodeToSongTitle.push( [t, getDescLine(i)] );
+  }
 }
-getDescLine(7);
 
 var hasTimecodes = timeCodesSeconds.length > 0;
 
@@ -30,8 +32,8 @@ function getDescLine(index){
   var posEndTitle   = desc.innerHTML.lastIndexOf('<a href', posTimecode);
   var posPrevLine   = desc.innerHTML.lastIndexOf('<br>', posEndTitle);
   var posStartTitle = posPrevLine + 4;
-  console.log(posPrevLine,posTimecode);
-  console.log(desc.innerHTML.slice(posStartTitle,posEndTitle));
+
+  return desc.innerHTML.slice(posStartTitle,posEndTitle);
 }
 
 function textToSeconds(text){
