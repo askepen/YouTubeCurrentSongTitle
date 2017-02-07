@@ -1,11 +1,15 @@
 var desc          = document.getElementById('eow-description');
 var videoTitle    = document.getElementById('eow-title');
 var player        = document.getElementById('movie_player').wrappedJSObject;
-var currentTime   = 0;
 var originalTitle = videoTitle.innerHTML;
 var timeCodesText = desc.getElementsByTagName('a');
-var timeCodesSeconds = [];
+
+var timeCodesSeconds    = [];
 var timeCodeToSongTitle = [];
+
+var currentTime        = 0;
+var currentSongTitle   = "";
+var songIndex      = 0;
 
 for (var i = 0; i < timeCodesText.length; i++) {
   var t = textToSeconds(timeCodesText[i].innerHTML);
@@ -24,7 +28,19 @@ function titleUpdater (){
   if (player.getPlayerState() != 1) return;
   currentTime   = Math.floor(player.getCurrentTime());
 
-  videoTitle.innerHTML = originalTitle + '<i>' + currentTime.toString() + '</i>';
+  findCorrectSong();
+
+  videoTitle.innerHTML = originalTitle + '<i> ' + currentSongTitle + '</i>';
+}
+
+function findCorrectSong(){
+  while(currentTime < timeCodeToSongTitle[songIndex][0])
+    songIndex--;
+
+  while(currentTime >= timeCodeToSongTitle[songIndex+1][0])
+    songIndex++;
+
+  currentSongTitle = timeCodeToSongTitle[songIndex][1];
 }
 
 function getDescLine(index){
