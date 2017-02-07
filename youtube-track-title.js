@@ -7,22 +7,27 @@ var timeCodesText = desc.getElementsByTagName('a');
 var timeCodesSeconds    = [];
 var timeCodeToSongTitle = [];
 
-var currentTime        = 0;
-var currentSongTitle   = "";
-var songIndex      = 0;
+var currentTime      = 0;
+var currentSongTitle = "";
+var songIndex        = 0;
 
-for (var i = 0; i < timeCodesText.length; i++) {
-  var t = textToSeconds(timeCodesText[i].innerHTML);
-
-  if (!isNaN(t)) {
-    timeCodesSeconds.push(t);
-    timeCodeToSongTitle.push( [t, getDescLine(i)] );
-  }
-}
-
-var hasTimecodes = timeCodesSeconds.length > 0;
+generateTimeCodes();
 
 var titleUpdaterInterval = setInterval(titleUpdater, 1000);
+
+function generateTimeCodes(){
+  for (var i = 0; i < timeCodesText.length; i++) {
+    var t = textToSeconds(timeCodesText[i].innerHTML);
+
+    if (!isNaN(t)) {
+      timeCodesSeconds.push(t);
+      timeCodeToSongTitle.push( [t, getDescLine(i)] );
+    }
+  }
+
+  if(timeCodesSeconds.length <= 0)
+    clearInterval(titleUpdaterInterval);
+}
 
 function titleUpdater (){
   if (player.getPlayerState() != 1) return;
@@ -44,6 +49,7 @@ function findCorrectSong(){
 }
 
 function getDescLine(index){
+
   var posTimecode   = desc.innerHTML.indexOf(timeCodesText[index].innerHTML);
   var posEndTitle   = desc.innerHTML.lastIndexOf('<a href', posTimecode);
   var posPrevLine   = desc.innerHTML.lastIndexOf('<br>', posEndTitle);
