@@ -1,0 +1,18 @@
+{
+  "manifest_version": 2,
+  "name": "YouTube Track Title",
+  "version": "1.0",
+
+  "description": "When listening to a full album or a mix, it adds the current track being played to the title of the youtube video.",
+
+  "icons": {
+    "32": "icons/icon-32.png"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["*://*.youtube.com/watch*"],
+      "js": ["youtube-track-title.js"]
+    }
+  ]
+}
