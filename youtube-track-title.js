@@ -12,8 +12,9 @@ for (var i = 0; i < timeCodesText.length; i++) {
   if(!isNaN(t))
     timeCodesSeconds.push(t);
 }
+getDescLine(7);
 
-//var hasTimecodes = timeCodesSeconds.length > 0;
+var hasTimecodes = timeCodesSeconds.length > 0;
 
 var titleUpdaterInterval = setInterval(titleUpdater, 1000);
 
@@ -24,8 +25,17 @@ function titleUpdater (){
   videoTitle.innerHTML = originalTitle + '<i>' + currentTime.toString() + '</i>';
 }
 
+function getDescLine(index){
+  var posTimecode   = desc.innerHTML.indexOf(timeCodesText[index].innerHTML);
+  var posEndTitle   = desc.innerHTML.lastIndexOf('<a href', posTimecode);
+  var posPrevLine   = desc.innerHTML.lastIndexOf('<br>', posEndTitle);
+  var posStartTitle = posPrevLine + 4;
+  console.log(posPrevLine,posTimecode);
+  console.log(desc.innerHTML.slice(posStartTitle,posEndTitle));
+}
+
 function textToSeconds(text){
-  var firstColon   = text.indexOf(':');
+  var firstColon  = text.indexOf(':');
   var secondColon = text.lastIndexOf(':');
   var t_hours   = '0';
   var t_minutes = '0';
