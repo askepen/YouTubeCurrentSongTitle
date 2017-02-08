@@ -1,9 +1,9 @@
 {
   "manifest_version": 2,
-  "name": "YouTube Track Title",
+  "name": "YouTube Current Song Title",
   "version": "1.0",
 
-  "description": "When listening to a full album or a mix, it adds the current track being played to the title of the youtube video.",
+  "description": "When listening to a full album or a mix, it adds the current song being played to the title of the YouTube video.",
 
   "icons": {
     "32": "icons/icon-32.png"
