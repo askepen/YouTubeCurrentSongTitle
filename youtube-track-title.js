@@ -51,11 +51,35 @@ function findCorrectSong(){
 function getDescLine(index){
 
   var posTimecode   = desc.innerHTML.indexOf(timeCodesText[index].innerHTML);
-  var posEndTitle   = desc.innerHTML.lastIndexOf('<a href', posTimecode);
-  var posPrevLine   = desc.innerHTML.lastIndexOf('<br>', posEndTitle);
-  var posStartTitle = posPrevLine + 4;
+  var posLinkStart  = desc.innerHTML.lastIndexOf('<a href', posTimecode);
+  var posLinkEnd    = desc.innerHTML.indexOf('</a>', posLinkStart);
+  var posPrevLine   = desc.innerHTML.lastIndexOf('<br>', posLinkStart);
+  var posNextLine   = desc.innerHTML.indexOf('<br>', posTimecode);
 
-  return desc.innerHTML.slice(posStartTitle,posEndTitle);
+  if(posPrevLine < 0)
+    posPrevLine = 0;
+  else 
+    posPrevLine += 4;
+
+  if(posNextLine < 0)
+    posNextLine = posTimecode + 100;
+
+  var direction = Math.sign((posNextLine - posTimecode) - (posLinkStart - posPrevLine));
+
+  var posStartTitle;
+  var posEndTitle;
+
+  if(direction > 0){
+    posStartTitle = posLinkEnd;
+    posEndTitle   = posNextLine;
+  } else {
+    posStartTitle = posPrevLine;
+    posEndTitle   = posLinkStart;
+  }
+
+  var r = desc.innerHTML.slice(posStartTitle,posEndTitle);
+  console.log(direction);
+  return r;
 }
 
 function textToSeconds(text){
