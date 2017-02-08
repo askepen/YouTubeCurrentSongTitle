@@ -31,11 +31,15 @@ function generateTimeCodes(){
 
 function titleUpdater (){
   if (player.getPlayerState() != 1) return;
+
   currentTime   = Math.floor(player.getCurrentTime());
+
+  var s = currentSongTitle;
 
   findCorrectSong();
 
-  videoTitle.innerHTML = originalTitle + '<i> ' + currentSongTitle + '</i>';
+  if (s != currentSongTitle)
+    videoTitle.innerHTML = originalTitle + '<i> ' + currentSongTitle + '</i>';
 }
 
 function findCorrectSong(){
@@ -78,7 +82,7 @@ function getDescLine(index){
   }
 
   var r = desc.innerHTML.slice(posStartTitle,posEndTitle);
-  console.log(direction);
+
   return r;
 }
 
