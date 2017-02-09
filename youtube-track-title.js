@@ -62,7 +62,7 @@ function getDescLine(index){
 
   if(posPrevLine < 0)
     posPrevLine = 0;
-  else 
+  else
     posPrevLine += 4;
 
   if(posNextLine < 0)
@@ -104,4 +104,24 @@ function textToSeconds(text){
   t_seconds = text.slice(secondColon+1);
 
   return parseInt(t_hours*60*60)+parseInt(t_minutes*60)+parseInt(t_seconds);
+}
+
+function nextSong(){
+  if(songIndex >= timeCodeToSongTitle.length)
+    return;
+
+  var nextTime = timeCodeToSongTitle[songIndex+1][0];
+
+  player.seekTo(nextTime);
+  findCorrectSong();
+}
+
+function prevSong(){
+  if(songIndex-1 > 0)
+    return;
+
+  var prevTime = timeCodeToSongTitle[songIndex-1][0];
+
+  player.seekTo(prevTime);
+  findCorrectSong();
 }
