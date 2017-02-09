@@ -14,5 +14,14 @@
       "matches": ["*://*.youtube.com/watch*"],
       "js": ["youtube-track-title.js"]
     }
+  ],
+
+  "web_accessible_resources": [
+    "images/next.png",
+    "images/next_hover.png",
+    "images/next_down.png",
+    "images/prev.png",
+    "images/prev_hover.png",
+    "images/prev_down.png"
   ]
 }

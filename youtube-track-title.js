@@ -11,6 +11,7 @@ var currentTime      = 0;
 var currentSongTitle = "";
 var songIndex        = 0;
 
+addNaviagtionButtons();
 generateTimeCodes();
 
 var titleUpdaterInterval = setInterval(titleUpdater, 1000);
@@ -117,11 +118,81 @@ function nextSong(){
 }
 
 function prevSong(){
-  if(songIndex-1 > 0)
+  if(songIndex-1 < 0)
     return;
 
   var prevTime = timeCodeToSongTitle[songIndex-1][0];
 
   player.seekTo(prevTime);
   findCorrectSong();
+}
+
+function addNaviagtionButtons(){
+  var wrapper = document.getElementById('watch-headline-title');
+  var container = document.createElement('div');
+  var container2 = document.createElement('div');
+  var title_width = document.getElementsByClassName('watch-title-container')[0].offsetWidth;
+
+  container.style.width = wrapper.offsetWidth - title_width + 'px';
+  container.style.margin = 'auto';
+  container.style.float = 'right';
+  container2.style.width = '102px';//TODO: make dynamic
+  container2.style.margin = 'auto';
+
+  wrapper.appendChild(container);
+  container.appendChild(container2);
+
+  var button_next = document.createElement('img');
+
+  button_next.src = getImageURL('next.png');
+  button_next.name = 'btn_next';
+  button_next.style.margin = '10px';
+
+  button_next.onmouseover = function(){
+    button_next.src = getImageURL('next_hover.png');
+  };
+
+  button_next.onmouseleave = function(){
+    button_next.src = getImageURL('next.png');
+  };
+
+  button_next.onmousedown = function(){
+    button_next.src = getImageURL('next_down.png');
+  };
+
+  button_next.onmouseup = function(){
+    button_next.src = getImageURL('next.png');
+    nextSong();
+  };
+
+
+  var button_prev = document.createElement('img');
+
+  button_prev.src = getImageURL('prev.png');
+  button_prev.name = 'btn_prev';
+  button_prev.style.margin = '10px';
+
+  button_prev.onmouseover = function(){
+    button_prev.src = getImageURL('prev_hover.png');
+  };
+
+  button_prev.onmouseleave = function(){
+    button_prev.src = getImageURL('prev.png');
+  };
+
+  button_prev.onmousedown = function(){
+    button_prev.src = getImageURL('prev_down.png');
+  };
+
+  button_prev.onmouseup = function(){
+    button_prev.src = getImageURL('prev.png');
+    prevSong();
+  };
+
+  container2.appendChild(button_prev);
+  container2.appendChild(button_next);
+}
+
+function getImageURL(filename) {
+  return browser.extension.getURL("images/" + filename);
 }
